@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+  <head>
+    <title>Projeto 2º ap</title>
+    <link rel="stylesheet" href="style.css">
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="cg3d.js"></script> 
+  </head>
+
+  <body>
+    <center>
+      <div id = "canvas">
+        <canvas id = "myCanvas" height = "300" width = "300"></canvas>
+      </div>
+    </center>
+    <section class = "container stretch">
+      <div class = "item"> 
+        <h2>Rotação</h2>
+        <label class = "coordenadas" for = "x">Coordenada X</label>
+        <input id = "x" type = "text" value = "0">
+          
+        <label class="coordenadas" for="y">Coordenada Y</label>
+        <input id = "y" type = "text" value = "0">
+
+        <label class = "coordenadas" for = "z">Coordenada z</label>
+        <input id = "z" type = "text" value = "0">
+       
+        <button class = "button" onclick = "rotacionar()">Calcular</button> 
+      </div>
+
+      <div class="item">
+        <h2>Escalonamento</h2>
+        <label class = "coordenadas" for = "escala_x">Escala x %:</label>
+        <input id = "escala_x" type = "text" value = "1">
+     
+        <label class = "coordenadas" for = "escala_y">Escala y %:</label>
+        <input id = "escala_y" type = "text" value = "1">
+          
+        <label class = "coordenadas" for = "escala_z">Escala z %:</label>
+        <input id = "escala_z" type = "text" value = "1">
+
+        <button class = "button" onclick = "escalonar()">Calcular</button>
+      </div>
+
+      <div class="item"> 
+        <h2>Translação</h2>
+        <label class = "coordenadas" for = "trans_x">Translatar x:</label>
+        <input id = "trans_x" type = "text" value = "0">
+
+        <label class = "coordenadas" for = "trans_y">Translatar y:</label>
+        <input id = "trans_y" type = "text" value = "0">
+
+        <label class = "coordenadas" for = "trans_z">Translatar z:</label>
+        <input id = "trans_z" type = "text" value = "0">
+         
+        <button class = "button" onclick = "translatar()">Calcular</button>
+      </div>
+        
+      <div class="item camera"> 
+        <h2>Câmera</h2>
+        <label class = "coordenadas" for = "cam_x">x:</label>
+        <input id = "cam_x" type = "text" value = "0">
+
+        <label class = "coordenadas" for = "cam_y">y:</label>
+        <input id = "cam_y" type = "text" value = "0">
+
+        <label class="coordenadas" for="cam_z">z:</label>
+        <input id = "cam_z" type = "text" value = "5">
+       
+        <button class = "button" onclick = "posiçãoCamera()">Calcular</button>
+
+        <hr>
+
+        <label class = "coordenadas" for = "cx">cx:</label>
+        <input id = "cx" type = "text" value = "10">
+ 
+        <label class = "coordenadas" for = "cy">cy:</label>
+        <input id = "cy" type = "text" value = "10">
+ 
+        <label class = "coordenadas" for = "cz">cz:</label>
+        <input id = "cz" type = "text" value = "10">
+        
+        <button class = "button" onclick = "cameraCX()">Calcular</button>
+
+        <hr>
+
+        <label class = "coordenadas" for = "fov">FOV:</label>
+        <input id = "fov" type = "text" value = "45">
+
+        <label class="coordenadas" for = "ra">RA:</label>
+        <input id = "ra" type = "text" value = "1">
+         
+        <br>
+        
+        <label class = "coordenadas" for = "near">Near:</label>
+        <input id = "near" type = "text" value = "0.1">
+          
+        <label class = "coordenadas" for = "near">Far:</label>
+        <input id = "far" type = "text" value = "1000">
+          
+        <br>
+
+        <button class = "button" onclick = "projecao_persp()">Calcular</button>
+      </div>
+
+      <div class="item"> 
+        <h2>Tipo de Projeção</h2>    
+        <select id = "tipo_proj">
+          <option value = "1">Perspectiva</option>
+          <option value = "2">Ortho</option>
+        </select>
+        
+        <button class = "button" onclick = "escolha_projecao()">Trocar</button>
+        <hr>
+
+        <label class = "coordenadas" for = "x_min">x_min:</label>
+        <input disabled id = "x_min" type = "text" value = "-1">
+        
+        <label class = "coordenadas" for = "y_min">y_min:</label>
+        <input disabled id = "y_min" type = "text" value = "-1">
+    
+        <hr>
+            
+        <label class = "coordenadas" for = "x_max">x_max:</label>
+        <input disabled id = "x_max" type = "text" value = "1">
+
+        <label class = "coordenadas" for = "y_max">y_max:</label>
+        <input disabled id = "y_max" type = "text" value = "1">
+           
+        <br>
+        <button class = "button" onclick = "projecao_orto()">Calcular</button>
+      </div>
+       
+      <div class = "item"> 
+        <h2>Matriz Atual</h2>
+        <center>
+          <table border = "1" class = "matriz">
+            <tr>
+              <td><input id = "1" type = "text" value = "1" disabled></td> 
+              <td><input id = "2" type = "text" value = "0" disabled></td> 
+              <td><input id = "3" type = "text" value = "0" disabled></td> 
+              <td><input id = "4" type = "text" value = "0" disabled></td> 
+            </tr>
+            <tr>
+              <td><input id = "5" type = "text" value = "0" disabled></td> 
+              <td><input id = "6" type = "text" value = "1" disabled></td> 
+              <td><input id = "7" type = "text" value = "0" disabled></td> 
+              <td><input id = "8" type = "text" value = "0" disabled></td> 
+            </tr>
+            <tr>
+              <td><input id = "9" type = "text" value = "0" disabled></td> 
+              <td><input id = "10" type = "text" value = "0" disabled></td> 
+              <td><input id = "11" type = "text" value = "1" disabled></td> 
+              <td><input id = "12" type = "text" value = "0" disabled></td> 
+            </tr>
+            <tr>
+              <td><input id = "13" type = "text" value = "0" disabled></td> 
+              <td><input id = "14" type = "text" value = "0" disabled></td> 
+              <td><input id = "15" type = "text" value = "0" disabled></td> 
+              <td><input id = "16" type = "text" value = "1" disabled></td> 
+            </tr>
+          </table>
+        </center>
+
+        <br>
+        <center>
+          <button class = "button" onclick = "atualizar()">Atualizar</button> 
+        </center>
+        </div>
+    </section>
+
+    <script language="JavaScript">
+      var canvas = document.getElementById("myCanvas");
+	    var context = canvas.getContext("2d");
+  
+      var cam_x = document.getElementById("cam_x").value;
+      var cam_y = document.getElementById("cam_y").value;
+      var cam_z = document.getElementById("cam_z").value;
+      
+      var cx = document.getElementById("cx").value;
+      var cy = document.getElementById("cy").value;
+      var cz = document.getElementById("cz").value;
+
+      var cam = new Camera(new Point3D(cx, cy, cz),
+                           new Point3D(cam_x, cam_y, cam_z),
+                           new Vector3D(0, 1, 0));
+
+      var ang = 0.5 * (2 * Math.PI/180);
+      var t = 0.30/Math.tan(ang);
+      var a = canvas.width/canvas.height;
+      var near = 0.1;
+      var far = 100;
+
+      var x = -1;
+      var X = 1;
+      var y = -1;
+      var Y = 1;
+
+      var proj = new Matrix4([
+        [t/a, 0, 0, 0],
+        [0, t, 0, 0],
+        [0, 0, (near+far)/(near-far), (2*near*far)/(near-far)],
+        [0, 0, -1, 0]]);
+        
+      var cube = new Cube(new Point3D(0, 0, 5), 0.3)
+      var mywindow = new Window3D(context, -1, -1, 1, 1, cam, proj);
+      mywindow.objects.push(cube);
+      mywindow.draw();
+      
+      function escolha_projecao(){
+        var tipo_proj = document.getElementById("tipo_proj").value;
+        if(tipo_proj == 2){
+          document.getElementById("x_min").disabled = false;
+          document.getElementById("y_min").disabled = false;
+          document.getElementById("y_max").disabled = false;
+          document.getElementById("x_max").disabled = false;
+          proj = new Matrix4(
+                      [[2 / (X-x), 0, 0, -(x+X)/(X-x)],
+                       [0, 2/(Y-y), 0, -(Y+y)/(Y-y)],
+                       [0, 0, 0, 0],
+                       [0, 0, 0, 1]]);
+          mywindow = new Window3D(context, -1, -1, 1, 1, cam, proj);
+          context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+          mywindow.objects.push(cube);
+          mywindow.draw();
+        }else if(tipo_proj == 1){
+          document.getElementById("x_min").disabled = true;
+          document.getElementById("y_min").disabled = true;
+          document.getElementById("y_max").disabled = true;
+          document.getElementById("x_max").disabled = true;
+          proj = new Matrix4([
+                     [t/a, 0, 0, 0],
+                     [0, t, 0, 0],
+                     [0, 0, (near+far)/(near-far), (2*near*far)/(near-far)],
+                     [0, 0, -1, 0]]);
+          mywindow = new Window3D(context, -1, -1, 1, 1, cam, proj);
+          context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+          mywindow.objects.push(cube);
+          mywindow.draw();
+        }
+      }
+      
+      function rotacionar(){
+        x = document.getElementById("x").value;
+        y = document.getElementById("y").value;
+        z = document.getElementById("z").value;
+        
+        if(y == 0 && z != 0 && x != 0){
+          cube.model = rotate3z(z).mult(cube.model);
+          cube.model = rotate3x(x).mult(cube.model); 
+        }else if(y != 0 && z == 0 && x != 0){
+          cube.model = rotate3x(x).mult(cube.model)
+          cube.model = rotate3y(y).mult(cube.model)
+        }
+        else if(y != 0 && z != 0 && x == 0){
+          cube.model = rotate3z(z).mult(cube.model)
+          cube.model = rotate3y(y).mult(cube.model)
+        }
+        else if(y == 0 && z == 0 && x != 0){
+          cube.model = rotate3x(x).mult(cube.model)
+        }
+        else if(y != 0 && z == 0 && x == 0 ){
+          cube.model = rotate3y(y).mult(cube.model)
+        }
+        else if(y == 0 && z != 0 && x == 0 ){
+          cube.model = rotate3z(z).mult(cube.model)
+        }
+        else if(y != 0 && z != 0 && x != 0){
+          cube.model = rotate3x(x).mult(cube.model)
+          cube.model = rotate3y(y).mult(cube.model)
+          cube.model = rotate3z(z).mult(cube.model)
+        }
+          
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        mywindow.objects.push(cube);
+        mywindow.draw();
+      }
+
+      function escalonar(){  
+       x = document.getElementById("escala_x").value;
+       y = document.getElementById("escala_y").value;
+       z = document.getElementById("escala_z").value;
+       
+       var escala = new Matrix4([[x, 0, 0, 0], 
+                                 [0, y, 0, 0], 
+                                 [0, 0, z, 0], 
+                                 [0, 0, 0, 1]]);   
+
+       cube.model = escala.mult(cube.model);
+       context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+       mywindow.objects.push(cube);
+       mywindow.draw();
+     }
+
+      function translatar(){
+       x = document.getElementById("trans_x").value;
+       y = document.getElementById("trans_y").value;
+       z = document.getElementById("trans_z").value;
+      
+       cube.model = translate3(x, y, z).mult(cube.model);
+       context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+       mywindow.objects.push(cube);
+       mywindow.draw();
+
+     }
+      
+      function posiçãoCamera(){
+        cam_x = document.getElementById("cam_x").value;
+        cam_y = document.getElementById("cam_y").value;
+        cam_z = document.getElementById("cam_z").value;
+       
+        cam = new Camera(new Point3D(cx, cy, cz), 
+                         new Point3D(cam_x, cam_y, cam_z),
+                         new Vector3D(0, 1, 0));
+                         
+        mywindow.camera = cam
+        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+        mywindow.objects.push(cube);
+        mywindow.draw(); 
+      }
+
+      function cameraCX(){
+            cx = document.getElementById("cx").value;
+            cy = document.getElementById("cy").value;
+            cz = document.getElementById("cz").value;
+
+            cam = new Camera(new Point3D(cx , cy, cz), 
+                             new Point3D(cam_x, cam_y, cam_z),
+                             new Vector3D(0, 1, 0));
+
+            mywindow = new Window3D(context, -1, -1, 1, 1, cam, proj);
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            mywindow.objects.push(cube);
+            mywindow.draw(); 
+      }
+
+      function projecao_persp(){
+       var fov = document.getElementById("fov").value;
+       ang = 0.5 * (fov * Math.PI / 180);
+       var ra = document.getElementById("ra").value;
+       t = ra / Math.tan(ang);
+       a = canvas.width / canvas.height;
+       far = document.getElementById("far").value;
+       near = document.getElementById("near").value;
+
+       proj = new Matrix4([[t/a, 0, 0, 0], 
+                           [0, t, 0, 0], 
+                           [0, 0,(near+far)/(near-far), (2*near*far)/(near-far)], 
+                           [0, 0, -1, 0]]);  
+
+       context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+       mywindow = new Window3D(context, -1, -1, 1, 1, cam, proj);
+       mywindow.objects.push(cube);
+       mywindow.draw();
+      }
+      
+      function projecao_orto(){
+        x = document.getElementById("x_min").value;
+        X = document.getElementById("x_max").value ;
+        y = document.getElementById("y_min").value;
+        Y = document.getElementById("y_max").value;
+            
+        proj = new Matrix4(
+                  [[2 / (X-x), 0, 0, -(x+X)/(X-x)],
+                  [0, 2/(Y-y), 0, -(Y+y)/(Y-y)],
+                  [0, 0, 0, 0],
+                  [0, 0, 0, 1]]);
+
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        mywindow = new Window3D(context, -1, -1, 1, 1, cam, proj);        
+        mywindow.objects.push(cube);
+        mywindow.draw();
+      }
+     
+      function atualizar(){
+        var matrix4 = proj.mult(cam.matrix)    
+        var aux = matrix4.mult(cube.model)
+        
+        document.getElementById("1").value = aux.data[0][0]; 
+        document.getElementById("2").value = aux.data[0][1]; 
+        document.getElementById("3").value = aux.data[0][2]; 
+        document.getElementById("4").value = aux.data[0][3]; 
+
+        document.getElementById("5").value = aux.data[1][0]; 
+        document.getElementById("6").value = aux.data[1][1]; 
+        document.getElementById("7").value = aux.data[1][2]; 
+        document.getElementById("8").value = aux.data[1][3]; 
+
+        document.getElementById("9").value = aux.data[2][0]; 
+        document.getElementById("10").value = aux.data[2][1]; 
+        document.getElementById("11").value = aux.data[2][2]; 
+        document.getElementById("12").value = aux.data[2][3];
+
+        document.getElementById("13").value = aux.data[3][0]; 
+        document.getElementById("14").value = aux.data[3][1]; 
+        document.getElementById("15").value = aux.data[3][2]; 
+        document.getElementById("16").value = aux.data[3][3]; 
+        
+        console.log(matrix4)
+     
+      }
+
+    </script>
+</body>
+</html>
